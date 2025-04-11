@@ -1,14 +1,12 @@
-const validarNome = (req, res, next) => {
+const validateName = (req, res, next) => {
     const { nome } = req.body;
-
-    if (!nome || typeof nome !== 'string' || nome.length < 2) {
-        return res
-            .status(400)
-            // eslint-disable-next-line max-len
-            .json({ mensagem: 'Nome inválido. Envie um nome com pelo menos 2 letras.' });
+  
+    if (nome === undefined || nome.trim() === '') {
+      return res.status(400).json({ message: 'O campo "nome" é obrigatório' });
     }
-
+  
     next();
-};
-
-module.exports = validarNome;
+  };
+  
+  module.exports = { validateName };
+  

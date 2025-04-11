@@ -1,21 +1,17 @@
 const express = require('express');
-require('dotenv').config(); // puxa variáveis do .env
-const path = require('path');
-
 const app = express();
 
-// Importando rotas
 const clientesRoutes = require('./routes/clientesRoutes');
+const produtosRoutes = require('./routes/produtosRoutes');
+const pedidoRoutes = require('./routes/pedidoRoutes');
 
-// Middlewares
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'views')));
 
-// Rotas
 app.use('/clientes', clientesRoutes);
+app.use('/produtos', produtosRoutes);
+app.use('/pedidos', pedidoRoutes);
 
-// Inicializando servidor
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });

@@ -1,27 +1,28 @@
 {
   "name": "desafio-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Desafio Back-End I - CRUD com Node.js, Express e MySQL",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "SilvaJunior47",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "cookie-parser": "^1.4.7",
-    "debug": "^4.4.0",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "debug": "^4.3.4",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "http-errors": "^2.0.0",
-    "jade": "^1.11.0",
-    "morgan": "^1.10.0",
-    "mysql2": "^3.14.0"
+    "jade": "^1.9.2",
+    "mysql2": "^3.9.4"
   },
   "devDependencies": {
-    "eslint": "^8.57.1",
+    "eslint": "^8.57.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.0"
   }
 }
