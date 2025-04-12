@@ -22,17 +22,24 @@
           nome: form.nome.value,
           sobrenome: form.sobrenome.value,
           email: form.email.value,
-          idade: form.idade.value,
+          idade: parseInt(form.idade.value), // idade tem que ser número!
         };
-        const res = await fetch("http://localhost:3000/clientes", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        const result = await res.json();
-        alert(
-          res.ok ? "Cliente cadastrado com sucesso!" : JSON.stringify(result)
-        );
+
+        try {
+          const res = await fetch("http://localhost:3000/clientes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await res.json();
+          alert(
+            res.ok ? "Cliente cadastrado com sucesso!" : JSON.stringify(result)
+          );
+        } catch (err) {
+          console.error("Erro ao enviar:", err);
+          alert("Erro ao cadastrar cliente. Verifique o console.");
+        }
       });
     </script>
   </body>

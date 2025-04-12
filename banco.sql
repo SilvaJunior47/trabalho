@@ -1,4 +1,6 @@
+CREATE DATABASE IF NOT EXISTS sistema_pedidos;
 USE sistema_pedidos;
+
 
 CREATE TABLE IF NOT EXISTS clientes (
   id INT AUTO_INCREMENT PRIMARY KEY,
