@@ -33,10 +33,15 @@ const login = async (req, res) => {
   res.json({ token });
 };
 
-const logout = async (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  blacklist.add(token);
-  res.json({ message: "Logout realizado com sucesso" });
+const { addTokenToBlacklist } = require("../middlewares/tokenBlacklist");
+
+const logout = (req, res) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.status(400).json({ message: "Token não encontrado" });
+
+  addTokenToBlacklist(token);
+  res.status(200).json({ message: "Logout realizado com sucesso" });
 };
 
 module.exports = {

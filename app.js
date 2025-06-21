@@ -4,10 +4,10 @@ const path = require("path");
 
 const app = express();
 
-// Middlewares
-app.use(cors()); // Libera acesso entre front e back-end
-app.use(express.json()); // Permite ler JSON no body
-app.use(express.static(path.join(__dirname, "views"))); // Serve o front-end
+// Middlewares globais
+app.use(cors()); 
+app.use(express.json()); 
+app.use(express.static(path.join(__dirname, "views"))); 
 
 // Rotas
 const clientesRoutes = require("./routes/clientesRoutes");
@@ -16,11 +16,12 @@ const pedidoRoutes = require("./routes/pedidoRoutes");
 const usuariosRoutes = require("./routes/usuariosRoutes");
 const cacheMiddleware = require("./middlewares/cacheMiddleware");
 
-app.use(cacheMiddleware);
-app.use("/clientes", clientesRoutes);
+// Aplica o cache apenas na rota GET de clientes
+app.use("/clientes", cacheMiddleware, clientesRoutes);
+
 app.use("/produtos", produtosRoutes);
 app.use("/pedidos", pedidoRoutes);
-app.use("/usuarios", usuariosRoutes); // Essa rota deve vir antes do listen()
+app.use("/usuarios", usuariosRoutes);
 
 // Iniciar servidor
 const port = 3000;

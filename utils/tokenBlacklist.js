@@ -1,14 +1,14 @@
 const blacklist = new Set();
 
-function addToBlacklist(token) {
+const addTokenToBlacklist = (token) => {
   blacklist.add(token);
-}
+};
 
-function isBlacklisted(token) {
+const isTokenBlacklisted = (token) => {
   return blacklist.has(token);
-}
+};
 
 module.exports = {
-  addToBlacklist,
-  isBlacklisted,
+  addTokenToBlacklist,
+  isTokenBlacklisted,
 };

@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "lint": "eslint . --config eslint.config.mjs --fix",
-    "test": "jest"
+    "test": "j"
   },
   "keywords": [],
   "author": "SilvaJunior47",

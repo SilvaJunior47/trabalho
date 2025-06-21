@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 const produtoController = require("../controllers/produtoController");
+const { validatePrice } = require("../middlewares/precoMiddleware");
+router.post("/", validatePrice, produtoController.save);
 
 router.get("/", produtoController.findAll);
 router.post("/", produtoController.save);

@@ -1,19 +1,28 @@
-const cache = {};
+const NodeCache = require("node-cache");
+const cache = new NodeCache({ stdTTL: 30 }); // TTL = 30 segundos
 
-function cacheMiddleware(req, res, next) {
-  const key = req.originalUrl;
+const cacheMiddleware = (req, res, next) => {
+  const key = "clientes_cache";
+  const cachedData = cache.get(key);
 
-  if (cache[key]) {
-    return res.status(200).json(cache[key]);
+  if (cachedData) {
+    console.log("[CACHE] Resultado retornado do cache");
+    return res.status(200).json(cachedData);
   }
 
-  const originalSend = res.json;
+  res.sendResponse = res.json;
   res.json = (body) => {
-    cache[key] = body;
-    originalSend.call(res, body);
+    console.log("[CACHE] Resultado vindo do banco. Cacheando...");
+    cache.set(key, body);
+    res.sendResponse(body);
   };
 
   next();
-}
+};
 
-module.exports = cacheMiddleware;
+const invalidateCache = () => {
+  console.log("[CACHE] Cache invalidado");
+  cache.del("clientes_cache");
+};
+
+module.exports = { cacheMiddleware, invalidateCache };
