@@ -1,11 +1,15 @@
 const mysql = require("mysql2/promise");
 
-// Configuração do banco de teste
+// Força o Jest a carregar o .env principal
+require("dotenv").config({ path: ".env" });
+
+// Configuração do banco que será usado nos testes (mesmo banco de desenvolvimento)
 const testDbConfig = {
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME_TEST || "test_database" // Use um banco separado para testes
+  host: process.env.MYSQL_HOST || "localhost",
+  user: process.env.MYSQL_USER || "root",
+  password: process.env.MYSQL_PASS || "Imund#$O.120",
+  database: process.env.MYSQL_DB || "desafio",
+  port: process.env.MYSQL_PORT || 3306,
 };
 
 let testConnection;
@@ -24,11 +28,9 @@ beforeAll(async () => {
 beforeEach(async () => {
   if (testConnection) {
     try {
-      // Limpar tabela de clientes antes de cada teste
-        await testConnection.execute
-            ("DELETE FROM clientes WHERE email LIKE \"%teste%\" OR email LIKE \"%exemplo%\"");
-      
-      // Reset auto increment (opcional)
+      await testConnection.execute(
+        "DELETE FROM clientes WHERE email LIKE \"%teste%\" OR email LIKE \"%exemplo%\""
+      );
       await testConnection.execute("ALTER TABLE clientes AUTO_INCREMENT = 1");
     } catch (error) {
       console.warn("Erro ao limpar banco de teste:", error.message);
@@ -40,17 +42,16 @@ beforeEach(async () => {
 afterAll(async () => {
   if (testConnection) {
     try {
-      // Limpeza final
-        await testConnection.execute
-            ("DELETE FROM clientes WHERE email LIKE \"%teste%\" OR email LIKE \"%exemplo%\"");
+      await testConnection.execute(
+        "DELETE FROM clientes WHERE email LIKE \"%teste%\" OR email LIKE \"%exemplo%\""
+      );
       await testConnection.end();
       console.log("Conexão com banco de teste fechada!");
     } catch (error) {
       console.warn("Erro ao fechar conexão de teste:", error.message);
     }
   }
-  
-  // Aguardar um pouco para garantir limpeza
+
   await new Promise(resolve => setTimeout(resolve, 1000));
 });
 
