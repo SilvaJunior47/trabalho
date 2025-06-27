@@ -6,10 +6,10 @@ const blacklist = require("../utils/tokenBlacklist");
 
 const createUser = async (req, res) => {
   const { usuario, senha } = req.body;
-  const hashed = await bcrypt.hash(senha, 10);
-  await usuariosService.create(usuario, hashed);
+  await usuariosService.create(usuario, senha); // <<< sem hash aqui
   res.status(201).json({ message: "Usuário criado" });
 };
+
 
 const listUsers = async (req, res) => {
   const users = await usuariosService.findAll();

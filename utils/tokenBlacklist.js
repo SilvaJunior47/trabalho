@@ -1,6 +1,7 @@
+// utils/tokenBlacklist.js
 const blacklist = new Set();
 
-const addTokenToBlacklist = (token) => {
+const blacklistToken = (token) => {
   blacklist.add(token);
 };
 
@@ -8,7 +9,4 @@ const isTokenBlacklisted = (token) => {
   return blacklist.has(token);
 };
 
-module.exports = {
-  addTokenToBlacklist,
-  isTokenBlacklisted,
-};
+module.exports = { blacklistToken, isTokenBlacklisted };

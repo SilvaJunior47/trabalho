@@ -1,21 +1,25 @@
+// services/usuarioService.js
 const connection = require("../configs/dbConfiguration");
+const bcrypt = require("bcrypt");
 
-const create = async (usuario, senha) => {
+async function create(usuario, senha) {
+  // hash da senha
+  const hash = await bcrypt.hash(senha, 10);
   const query = "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)";
-  await (await connection).execute(query, [usuario, senha]);
-};
+  await (await connection).execute(query, [usuario, hash]);
+}
 
-const findAll = async () => {
+async function findAll() {
   const [rows] = await (await connection).execute("SELECT * FROM usuarios");
   return rows;
-};
+}
 
-const findByUsuario = async (usuario) => {
+async function findByUsuario(usuario) {
   const [rows] = await (await connection).execute(
     "SELECT * FROM usuarios WHERE usuario = ?",
     [usuario]
   );
   return rows[0];
-};
+}
 
 module.exports = { create, findAll, findByUsuario };

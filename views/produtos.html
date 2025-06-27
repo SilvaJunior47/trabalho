@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <style>
+      body {
+        background: #f4f7fa;
+        font-family: Arial, sans-serif;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        text-align: center;
+      }
+      h1 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      input {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccd;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      button {
+        padding: 0.75rem;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #357ab8;
+      }
+      .links {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
+      .links a {
+        color: #4a90e2;
+        text-decoration: none;
+      }
+      .links a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lista de Produtos</h1>
+    <ul id="listaProdutos"></ul>
+
+    <script>
+      fetch("http://localhost:3000/produtos")
+        .then((res) => res.json())
+        .then((produtos) => {
+          const lista = document.getElementById("listaProdutos");
+          produtos.forEach((p) => {
+            const item = document.createElement("li");
+            item.textContent = `${p.nome} - R$${p.preco}`;
+            lista.appendChild(item);
+          });
+        });
+    </script>
+  </body>
+</html>

@@ -3,27 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <title>Sistema de Cadastro</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f2f6fa;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      nav a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+      }
+
+      form {
+        max-width: 300px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      input {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        padding: 10px;
+        width: 100%;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        margin: 5px 0;
+        color: #555;
+      }
+    </style>
   </head>
   <body>
     <h1>Bem-vindo!</h1>
 
     <nav>
-      <a href="login.html">Login</a> | <a href="logout.html">Logout</a> |
+      <a href="login.html">Login</a>
+      <a href="logout.html">Logout</a>
       <a href="produtos.html">Ver Produtos</a>
     </nav>
 
-    <hr />
-
     <h2>Cadastrar Cliente</h2>
     <form id="formCliente">
-      <input name="nome" placeholder="Nome" required /><br />
-      <input name="sobrenome" placeholder="Sobrenome" required /><br />
-      <input name="email" placeholder="Email" required /><br />
-      <input name="idade" type="number" placeholder="Idade" required /><br />
+      <input name="nome" placeholder="Nome" required />
+      <input name="sobrenome" placeholder="Sobrenome" required />
+      <input name="email" placeholder="Email" required />
+      <input name="idade" type="number" placeholder="Idade" required />
       <button type="submit">Cadastrar</button>
     </form>
-
-    <hr />
 
     <h2>Listagem de Clientes (requer login)</h2>
     <button onclick="carregarClientes()">Carregar Clientes</button>

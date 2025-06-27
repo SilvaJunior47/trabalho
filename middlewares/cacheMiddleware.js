@@ -1,28 +1,27 @@
+// middlewares/cacheMiddleware.js
 const NodeCache = require("node-cache");
-const cache = new NodeCache({ stdTTL: 30 }); // TTL = 30 segundos
+const cache = new NodeCache({ stdTTL: 30 });
 
-const cacheMiddleware = (req, res, next) => {
-  const key = "clientes_cache";
-  const cachedData = cache.get(key);
+function cacheMiddleware(req, res, next) {
+  if (req.method !== "GET" || !req.originalUrl.includes("/clientes")) {
+    return next();
+  }
 
-  if (cachedData) {
-    console.log("[CACHE] Resultado retornado do cache");
-    return res.status(200).json(cachedData);
+  const key = req.originalUrl;
+  const cached = cache.get(key);
+  if (cached) {
+    console.log("[CACHE] Servido do cache:", key);
+    return res.status(200).json(cached);
   }
 
   res.sendResponse = res.json;
   res.json = (body) => {
-    console.log("[CACHE] Resultado vindo do banco. Cacheando...");
     cache.set(key, body);
+    console.log("[CACHE] Servido do banco e armazenado:", key);
     res.sendResponse(body);
   };
 
   next();
-};
+}
 
-const invalidateCache = () => {
-  console.log("[CACHE] Cache invalidado");
-  cache.del("clientes_cache");
-};
-
-module.exports = { cacheMiddleware, invalidateCache };
+module.exports = cacheMiddleware; // ✅ exporta direto a função
